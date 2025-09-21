@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { fetchCrypto24h } from "@/lib/features/crypto/cryptoSlice";
 import Crypto24hChart from "@/components/crypto24hChart";
+import TradeWidget from "@/components/TradeModal";
 
 function formatEUR(n: number | null) {
   if (n == null) return "—";
@@ -13,6 +14,9 @@ function formatEUR(n: number | null) {
 export default function Home() {
   const dispatch = useAppDispatch();
   const { latest, status } = useAppSelector((s) => s.crypto);
+  const [open, setOpen] = useState(false);
+  // @TODO refactor later
+  const price = latest;
 
   useEffect(() => {
     if (status === "idle") {
@@ -29,6 +33,12 @@ export default function Home() {
         </div>
         <section style={{ marginTop: 32 }}>
           <Crypto24hChart />
+          <TradeWidget
+            exchangeRateEurPerBtc={price} 
+            onSubmit={({ side, eur, btc }) => {
+              console.log("trade", { side, eur, btc });
+            }}
+          />
         </section>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
