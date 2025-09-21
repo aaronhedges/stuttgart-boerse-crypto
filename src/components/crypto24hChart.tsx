@@ -1,6 +1,9 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks/hooks';
+import { fetchCrypto24h } from '@/lib/features/crypto/cryptoSlice';
+
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -14,17 +17,21 @@ import {
   Title,
 } from 'chart.js';
 import 'chartjs-adapter-date-fns';
-import { useCryptoPrices } from '../lib/hooks/useCrytoPrices';
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler, Title);
 
 export default function Crypto24hChart() {
-  const { data, loading, error } = useCryptoPrices();
+  const dispatch = useAppDispatch();
+  const { series, status, error } = useAppSelector((s) => s.crypto);
+
+  useEffect(() => {
+    if (status === 'idle') dispatch(fetchCrypto24h());
+  }, [status, dispatch]);
 
   const chart = useMemo(() => {
-    if (!data) return null;
-    const labels = data.prices.map(([iso]) => iso);
-    const values = data.prices.map(([, price]) => price);
+    if (!series.length) return null;
+    const labels = series.map(([iso]) => iso);
+    const values = series.map(([, p]) => p);
 
     return {
       data: {
@@ -48,22 +55,16 @@ export default function Crypto24hChart() {
           tooltip: { intersect: false, mode: 'index' as const },
         },
         scales: {
-          x: {
-            type: 'time' as const,
-            time: { unit: 'hour' as const, tooltipFormat: "MMM d, HH:mm" },
-            ticks: { autoSkip: true, maxTicksLimit: 12 },
-          },
-          y: {
-            beginAtZero: false,
-          },
+          x: { type: 'time' as const, time: { unit: 'hour' as const, tooltipFormat: 'MMM d, HH:mm' } },
+          y: { beginAtZero: false },
         },
       },
     };
-  }, [data]);
+  }, [series]);
 
-  if (loading) return <p>Loading BTC/EUR…</p>;
-  if (error) return <p style={{ color: 'crimson' }}>Error: {error}</p>;
-  if (!chart) return null;
+  if (status === 'loading') return <p>Loading BTC/EUR…</p>;
+  if (status === 'failed') return <p style={{ color: 'crimson' }}>Error: {error}</p>;
+  if (!chart) return <p>No data</p>;
 
   return (
     <div style={{ height: 320 }}>
