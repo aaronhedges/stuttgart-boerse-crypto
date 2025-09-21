@@ -1,11 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import cryptoReducer from "./features/crypto/cryptoSlice";
-// import counterReducer from './features/counter/counterSlice'; // optional
+import cryptoReducer from "@/lib/features/crypto/cryptoSlice";
 
 export const store = configureStore({
   reducer: {
     crypto: cryptoReducer,
-    // counter: counterReducer,
   },
 });
 
