@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useEffect, useMemo } from 'react';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks/hooks';
-import { fetchCrypto24h } from '@/lib/features/crypto/cryptoSlice';
+import { useEffect, useMemo } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
+import { fetchCrypto24h } from "@/lib/features/crypto/cryptoSlice";
 
-import { Line } from 'react-chartjs-2';
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   TimeScale,
@@ -15,8 +15,8 @@ import {
   Legend,
   Filler,
   Title,
-} from 'chart.js';
-import 'chartjs-adapter-date-fns';
+} from "chart.js";
+import "chartjs-adapter-date-fns";
 
 ChartJS.register(TimeScale, LinearScale, PointElement, LineElement, Tooltip, Legend, Filler, Title);
 
@@ -25,7 +25,7 @@ export default function Crypto24hChart() {
   const { series, status, error } = useAppSelector((s) => s.crypto);
 
   useEffect(() => {
-    if (status === 'idle') dispatch(fetchCrypto24h());
+    if (status === "idle") dispatch(fetchCrypto24h());
   }, [status, dispatch]);
 
   const chart = useMemo(() => {
@@ -38,7 +38,7 @@ export default function Crypto24hChart() {
         labels,
         datasets: [
           {
-            label: 'BTC/EUR (24h)',
+            label: "BTC/EUR (24h)",
             data: values,
             fill: false,
             tension: 0.25,
@@ -51,19 +51,22 @@ export default function Crypto24hChart() {
         responsive: true,
         plugins: {
           legend: { display: false },
-          title: { display: true, text: 'Bitcoin price (EUR, last 24h)' },
-          tooltip: { intersect: false, mode: 'index' as const },
+          title: { display: true, text: "Bitcoin price (EUR, last 24h)" },
+          tooltip: { intersect: false, mode: "index" as const },
         },
         scales: {
-          x: { type: 'time' as const, time: { unit: 'hour' as const, tooltipFormat: 'MMM d, HH:mm' } },
+          x: {
+            type: "time" as const,
+            time: { unit: "hour" as const, tooltipFormat: "MMM d, HH:mm" },
+          },
           y: { beginAtZero: false },
         },
       },
     };
   }, [series]);
 
-  if (status === 'loading') return <p>Loading BTC/EUR…</p>;
-  if (status === 'failed') return <p style={{ color: 'crimson' }}>Error: {error}</p>;
+  if (status === "loading") return <p>Loading BTC/EUR…</p>;
+  if (status === "failed") return <p style={{ color: "crimson" }}>Error: {error}</p>;
   if (!chart) return <p>No data</p>;
 
   return (

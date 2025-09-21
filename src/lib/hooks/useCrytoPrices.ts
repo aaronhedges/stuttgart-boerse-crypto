@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 type Point = [string, number];
 type ApiResponse = { prices: Point[] };
@@ -14,12 +14,12 @@ export function useCryptoPrices() {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch('/api/crypto', { cache: 'no-store' });
+        const res = await fetch("/api/crypto", { cache: "no-store" });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json: ApiResponse = await res.json();
         if (!cancelled) setData(json);
       } catch (e: any) {
-        if (!cancelled) setError(e?.message ?? 'Failed to load');
+        if (!cancelled) setError(e?.message ?? "Failed to load");
       } finally {
         if (!cancelled) setLoading(false);
       }

@@ -1,5 +1,5 @@
-import { configureStore } from '@reduxjs/toolkit';
-import cryptoReducer from './features/crypto/cryptoSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import cryptoReducer from "./features/crypto/cryptoSlice";
 // import counterReducer from './features/counter/counterSlice'; // optional
 
 export const store = configureStore({

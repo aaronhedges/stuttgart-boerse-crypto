@@ -1,13 +1,13 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks/hooks';
-import { fetchCrypto24h } from '@/lib/features/crypto/cryptoSlice';
-import Crypto24hChart from '@/components/crypto24hChart';
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
+import { fetchCrypto24h } from "@/lib/features/crypto/cryptoSlice";
+import Crypto24hChart from "@/components/crypto24hChart";
 
 function formatEUR(n: number | null) {
-  if (n == null) return '—';
-  return n.toLocaleString('de-DE', { style: 'currency', currency: 'EUR' });
+  if (n == null) return "—";
+  return n.toLocaleString("de-DE", { style: "currency", currency: "EUR" });
 }
 
 export default function Home() {
@@ -15,7 +15,7 @@ export default function Home() {
   const { latest, status } = useAppSelector((s) => s.crypto);
 
   useEffect(() => {
-    if (status === 'idle') dispatch(fetchCrypto24h());
+    if (status === "idle") dispatch(fetchCrypto24h());
   }, [status, dispatch]);
 
   return (
