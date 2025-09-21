@@ -15,7 +15,9 @@ export default function Home() {
   const { latest, status } = useAppSelector((s) => s.crypto);
 
   useEffect(() => {
-    if (status === "idle") dispatch(fetchCrypto24h());
+    if (status === "idle") {
+      void dispatch(fetchCrypto24h());
+    }
   }, [status, dispatch]);
 
   return (
