@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
-import { fetchCrypto24h } from "@/lib/features/crypto/cryptoSlice";
+import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
 import Crypto24hChart from "@/components/crypto24hChart";
 import TradeWidget from "@/components/TradeModal";
+import CryptoTransactions from "@/components/cryptoTransactions";
 
 function formatEUR(n: number | null) {
   if (n == null) return "—";
@@ -39,6 +40,7 @@ export default function Home() {
               console.log("trade", { side, eur, btc });
             }}
           />
+          <CryptoTransactions />
         </section>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>

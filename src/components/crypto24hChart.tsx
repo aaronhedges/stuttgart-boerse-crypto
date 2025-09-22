@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
-import { fetchCrypto24h } from "@/lib/features/crypto/cryptoSlice";
+import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
 
 import { Line } from "react-chartjs-2";
 import {
