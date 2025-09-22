@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function Header() {
   return (
-    <header className="w-full max-w-screen-md flex items-center justify-between p-4">
+    <header className="w-full max-w-screen-md flex items-center justify-between">
       <div className="flex-shrink-0">
         <Image
           src="/images/bison.png" 
