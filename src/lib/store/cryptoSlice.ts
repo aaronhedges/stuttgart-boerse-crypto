@@ -5,14 +5,14 @@ export type ApiResponse = { prices: Point[] };
 
 type CryptoState = {
   series: Point[];
-  latest: number | null;
+  latestPrice: number | null;
   status: "idle" | "loading" | "succeeded" | "failed";
   error?: string | null;
 };
 
 const initialState: CryptoState = {
   series: [],
-  latest: null,
+  latestPrice: null,
   status: "idle",
   error: null,
 };
@@ -36,7 +36,7 @@ const cryptoSlice = createSlice({
       s.status = "succeeded";
       s.series = payload.prices;
       const last = payload.prices[payload.prices.length - 1];
-      s.latest = last ? last[1] : null;
+      s.latestPrice = last ? last[1] : null;
     });
     b.addCase(fetchCrypto24h.rejected, (s, a) => {
       s.status = "failed";

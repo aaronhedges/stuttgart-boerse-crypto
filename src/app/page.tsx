@@ -14,10 +14,8 @@ function formatEUR(n: number | null) {
 
 export default function Home() {
   const dispatch = useAppDispatch();
-  const { latest, status } = useAppSelector((s) => s.crypto);
+  const { latestPrice, status } = useAppSelector((s) => s.crypto);
   const [open, setOpen] = useState(false);
-  // @TODO refactor later
-  const price = latest;
 
   useEffect(() => {
     if (status === "idle") {
@@ -29,14 +27,14 @@ export default function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
       <header>logo goes here</header>
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+        <div className="flex gap-1 items-center flex-col sm:flex-row">
           <h1>BTC</h1>
-          <h2>{formatEUR(latest)} EUR</h2>
+          <h2>{formatEUR(latestPrice)}</h2>
         </div>
         <section>
           <Crypto24hChart />
           <TradeWidget
-            exchangeRateEurPerBtc={price} 
+            exchangeRateEurPerBtc={latestPrice} 
             onSubmit={({ side, eur, btc }) => {
               console.log("trade", { side, eur, btc });
             }}
