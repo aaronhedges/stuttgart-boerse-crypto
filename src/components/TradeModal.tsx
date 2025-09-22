@@ -179,13 +179,13 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
               onClick={() => handleAction("buy")}
-              className="rounded-lg bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="rounded-lg bg-[#153243] px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             >
               Buy
             </button>
             <button
               onClick={() => handleAction("sell")}
-              className="rounded-lg bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              className="rounded-lg bg-[#153243] px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rose-400"
             >
               Sell
             </button>
@@ -203,7 +203,7 @@ export default function TradeWidget(props: Omit<TradeModalProps, "isOpen" | "onC
     <div className="py-4">
       <button
         onClick={() => setOpen(true)}
-        className="rounded-lg w-full bg-blue-500 px-5 py-3 text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:bg-white dark:text-black"
+        className="rounded-lg w-full bg-[#153243] px-5 py-3 text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:bg-white dark:text-black"
       >
         Trade
       </button>
