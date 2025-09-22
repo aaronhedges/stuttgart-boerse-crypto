@@ -11,6 +11,7 @@ export default function Header() {
           width={56}
           height={52}
           className="object-contain"
+          priority
         />
       </div>
 
