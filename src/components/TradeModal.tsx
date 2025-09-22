@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { X } from "lucide-react";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/lib/store/store";
+import { recordTrade } from "@/utils/recordTrade";
 
 export type TradeSide = "buy" | "sell";
 
@@ -34,6 +37,7 @@ function parseGermanNumber(input: string): number | null {
 }
 
 export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }: TradeModalProps) {
+  const dispatch = useDispatch<AppDispatch>();
   const dialogRef = useRef<HTMLDivElement>(null);
   const eurInputRef = useRef<HTMLInputElement>(null);
   const [eurRaw, setEurRaw] = useState<string>("");
@@ -98,7 +102,16 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
   const handleAction = (side: TradeSide) => {
     const eur = parseGermanNumber(eurRaw) ?? 0;
     const btc = parseGermanNumber(btcRaw) ?? 0;
-    onSubmit?.({ side, eur, btc });
+
+    if (eur > 0 && btc > 0) {
+      recordTrade(dispatch, {
+        action: side,
+        eur: Math.abs(eur),
+        btc: Math.abs(btc),
+        timestamp: new Date().toISOString(),
+      });
+    }
+
     onClose();
   };
 
@@ -129,7 +142,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
         </div>
 
         <div className="mt-4 space-y-3">
-          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden"> 
+          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden">
             <input
               ref={eurInputRef}
               inputMode="decimal"
@@ -142,14 +155,12 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
               }}
               onBlur={handleBlurFormatEur}
               onFocus={handleFocusUnformatEur}
-              className="flex-1 p-2 text-right outline-none text-right outline-none placeholder:text-neutral-400"
+              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400"
             />
-            <div className="px-3 py-2 text-blue-700 text-sm">
-              EUR
-            </div>
+            <div className="px-3 py-2 text-blue-700 text-sm">EUR</div>
           </div>
 
-          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden"> 
+          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden">
             <input
               inputMode="decimal"
               placeholder={deNumber.format(0)}
@@ -160,13 +171,10 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
                 if (n !== null) syncFromBtc(n);
               }}
               onBlur={handleBlurFormatBtc}
-              className="flex-1 p-2 text-right outline-none text-right outline-none placeholder:text-neutral-400"
+              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400"
             />
-            <div className="px-3 py-2 text-blue-700 text-sm">
-              BTC
-            </div>
+            <div className="px-3 py-2 text-blue-700 text-sm">BTC</div>
           </div>
-
 
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
@@ -182,7 +190,6 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
               Sell
             </button>
           </div>
-
         </div>
       </div>
     </div>
@@ -200,11 +207,7 @@ export default function TradeWidget(props: Omit<TradeModalProps, "isOpen" | "onC
       >
         Trade
       </button>
-      <TradeModal
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        {...props}
-      />
+      <TradeModal isOpen={open} onClose={() => setOpen(false)} {...props} />
     </div>
   );
 }
