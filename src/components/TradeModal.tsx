@@ -164,27 +164,21 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
             />
           </label>
 
-          {/* Actions */}
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
               onClick={() => handleAction("buy")}
-              className="rounded-xl bg-emerald-600 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="rounded-xl bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             >
               Buy
             </button>
             <button
               onClick={() => handleAction("sell")}
-              className="rounded-xl bg-rose-600 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              className="rounded-xl bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rose-400"
             >
               Sell
             </button>
           </div>
 
-          {exchangeRateEurPerBtc && (
-            <p className="mt-2 text-xs text-neutral-500">
-              1 BTC ≈ {deCurrency.format(exchangeRateEurPerBtc)}
-            </p>
-          )}
         </div>
       </div>
     </div>
@@ -195,10 +189,10 @@ export default function TradeWidget(props: Omit<TradeModalProps, "isOpen" | "onC
   const [open, setOpen] = useState(false);
 
   return (
-    <>
+    <div className="py-4">
       <button
         onClick={() => setOpen(true)}
-        className="rounded-2xl bg-primary px-5 py-3 text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:bg-white dark:text-black"
+        className="rounded-2xl w-full bg-blue-500 px-5 py-3 text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:bg-white dark:text-black"
       >
         Trade
       </button>
@@ -207,6 +201,6 @@ export default function TradeWidget(props: Omit<TradeModalProps, "isOpen" | "onC
         onClose={() => setOpen(false)}
         {...props}
       />
-    </>
+    </div>
   );
 }
