@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
+import Header from "@/components/Header";
 import Crypto24hChart from "@/components/Crypto24hChart";
 import TradeWidget from "@/components/TradeModal";
 import CryptoTransactions from "@/components/CryptoTransactions";
@@ -25,8 +26,8 @@ export default function Home() {
 
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
-      <header>logo goes here</header>
-      <main className="flex flex-col gap-2 row-start-2 items-center sm:items-start">
+      <Header />
+      <main className="w-full max-w-screen-md">
         <div className="flex gap-1 items-center flex-col sm:flex-row">
           <h1>BTC</h1>
           <h2>{formatEUR(latestPrice)}</h2>
