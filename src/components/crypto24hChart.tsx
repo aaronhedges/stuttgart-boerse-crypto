@@ -51,7 +51,6 @@ export default function Crypto24hChart() {
         responsive: true,
         plugins: {
           legend: { display: false },
-          title: { display: true, text: "Bitcoin price (EUR, last 24h)" },
           tooltip: { intersect: false, mode: "index" as const },
         },
         scales: {
