@@ -26,13 +26,14 @@ export default function Home() {
   }, [status, dispatch]);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
+    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
+      <header>logo goes here</header>
       <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <div className="flex gap-4 items-center flex-row sm:flex-row">
+        <div className="flex gap-4 items-center flex-col sm:flex-row">
           <h1>BTC</h1>
           <h2>{formatEUR(latest)} EUR</h2>
         </div>
-        <section style={{ marginTop: 32 }}>
+        <section>
           <Crypto24hChart />
           <TradeWidget
             exchangeRateEurPerBtc={price} 
@@ -43,7 +44,7 @@ export default function Home() {
           <CryptoTransactions />
         </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer>
+      {/* <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer> */}
     </div>
   );
 }
