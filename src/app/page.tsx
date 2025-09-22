@@ -25,12 +25,12 @@ export default function Home() {
   }, [status, dispatch]);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
+    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
       <Header />
       <main className="w-full max-w-screen-md">
         <div className="flex gap-1 items-center flex-col sm:flex-row">
-          <h1>BTC</h1>
-          <h2>{formatEUR(latestPrice)}</h2>
+          <h1 className="font-semibold text-2xl">BTC</h1>
+          <h2 className="font-semibold text-2xl">{formatEUR(latestPrice)}</h2>
         </div>
         <section>
           <Crypto24hChart />

@@ -127,7 +127,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
     >
       <div
         ref={dialogRef}
-        className="w-full max-w-md rounded-2xl bg-white p-5 shadow-2xl outline-none dark:bg-neutral-900"
+        className="w-full max-w-md rounded-lg bg-white p-5 shadow-2xl outline-none dark:bg-neutral-900"
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
@@ -142,7 +142,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
         </div>
 
         <div className="mt-4 space-y-3">
-          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden">
+          <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 overflow-hidden">
             <input
               ref={eurInputRef}
               inputMode="decimal"
@@ -160,7 +160,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
             <div className="px-3 py-2 text-blue-700 text-sm">EUR</div>
           </div>
 
-          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden">
+          <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 overflow-hidden">
             <input
               inputMode="decimal"
               placeholder={deNumber.format(0)}
@@ -179,13 +179,13 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
               onClick={() => handleAction("buy")}
-              className="rounded-xl bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+              className="rounded-lg bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-emerald-400"
             >
               Buy
             </button>
             <button
               onClick={() => handleAction("sell")}
-              className="rounded-xl bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rose-400"
+              className="rounded-lg bg-blue-500 px-4 py-2 text-white shadow hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-rose-400"
             >
               Sell
             </button>
@@ -203,7 +203,7 @@ export default function TradeWidget(props: Omit<TradeModalProps, "isOpen" | "onC
     <div className="py-4">
       <button
         onClick={() => setOpen(true)}
-        className="rounded-2xl w-full bg-blue-500 px-5 py-3 text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:bg-white dark:text-black"
+        className="rounded-lg w-full bg-blue-500 px-5 py-3 text-white shadow-md transition hover:translate-y-[-1px] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-black/20 dark:bg-white dark:text-black"
       >
         Trade
       </button>

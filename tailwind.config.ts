@@ -6,6 +6,9 @@ const config: Config = {
       colors: {
         primary: "rgb(var(--color-primary) / <alpha-value>)",
       },
+      fontFamily: {
+        sans: ["Open Sans", "ui-sans-serif", "system-ui"],
+      },
     },
   },
 };
