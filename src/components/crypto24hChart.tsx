@@ -40,10 +40,29 @@ export default function Crypto24hChart() {
           {
             label: "BTC/EUR (24h)",
             data: values,
-            fill: false,
+            fill: true,
             tension: 0.25,
             pointRadius: 0,
             borderWidth: 2,
+            borderColor: "blue",
+            backgroundColor: (ctx) => {
+              const chart = ctx.chart;
+              const { ctx: canvasCtx, chartArea } = chart;
+    
+              if (!chartArea) {
+                return null;
+              }
+    
+              const gradient = canvasCtx.createLinearGradient(
+                0,
+                chartArea.top,
+                0,
+                chartArea.bottom
+              );
+              gradient.addColorStop(0, "rgba(66, 215, 245, 1)");
+              gradient.addColorStop(1, "rgba(0, 0, 255, 0)");
+              return gradient;
+            },
           },
         ],
       },
@@ -59,11 +78,17 @@ export default function Crypto24hChart() {
             time: { unit: "hour" as const, tooltipFormat: "MMM d, HH:mm" },
             ticks: {
               display: false,
-            }
+            },
+            grid: {
+              display: false,
+            },
           },
           y: { 
             beginAtZero: false,
-            position: "right"
+            position: "right",
+            grid: {
+              display: false,
+            },
           },
         },
       },

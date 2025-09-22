@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
-import Crypto24hChart from "@/components/crypto24hChart";
+import Crypto24hChart from "@/components/Crypto24hChart";
 import TradeWidget from "@/components/TradeModal";
-import CryptoTransactions from "@/components/cryptoTransactions";
+import CryptoTransactions from "@/components/CryptoTransactions";
 
 function formatEUR(n: number | null) {
   if (n == null) return "—";
@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
       <header>logo goes here</header>
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <main className="flex flex-col gap-2 row-start-2 items-center sm:items-start">
         <div className="flex gap-1 items-center flex-col sm:flex-row">
           <h1>BTC</h1>
           <h2>{formatEUR(latestPrice)}</h2>
