@@ -14,8 +14,9 @@ const deNumber = new Intl.NumberFormat("de-DE", {
   minimumFractionDigits: 0,
   maximumFractionDigits: 8,
 });
+
 const deCurrency = new Intl.NumberFormat("de-DE", {
-  style: "currency",
+  style: "decimal",
   currency: "EUR",
   minimumFractionDigits: 2,
   maximumFractionDigits: 2,
@@ -117,9 +118,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
         onMouseDown={(e) => e.stopPropagation()}
       >
         <div className="flex items-start justify-between gap-4">
-          <h2 id={labelId} className="text-xl font-semibold tracking-tight">
-            Trade
-          </h2>
+          <div id={labelId} className="tracking-tight"></div>
           <button
             onClick={onClose}
             aria-label="Close"
@@ -130,8 +129,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
         </div>
 
         <div className="mt-4 space-y-3">
-          <label className="block text-sm font-medium text-neutral-600 dark:text-neutral-300">
-            EUR
+          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden"> 
             <input
               ref={eurInputRef}
               inputMode="decimal"
@@ -144,12 +142,14 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
               }}
               onBlur={handleBlurFormatEur}
               onFocus={handleFocusUnformatEur}
-              className="mt-1 w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-base shadow-sm outline-none placeholder:text-neutral-400 focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
+              className="flex-1 p-2 text-right outline-none text-right outline-none placeholder:text-neutral-400"
             />
-          </label>
+            <div className="px-3 py-2 text-blue-700 text-sm">
+              EUR
+            </div>
+          </div>
 
-          <label className="block text-sm font-medium text-neutral-600 dark:text-neutral-300">
-            BTC
+          <div className="w-full flex items-center rounded w-80 bg-gray-100 overflow-hidden"> 
             <input
               inputMode="decimal"
               placeholder={deNumber.format(0)}
@@ -160,9 +160,13 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
                 if (n !== null) syncFromBtc(n);
               }}
               onBlur={handleBlurFormatBtc}
-              className="mt-1 w-full rounded-xl border border-neutral-200 bg-white px-3 py-2 text-base shadow-sm outline-none placeholder:text-neutral-400 focus:border-neutral-400 focus:ring-2 focus:ring-neutral-200 dark:border-neutral-700 dark:bg-neutral-900"
+              className="flex-1 p-2 text-right outline-none text-right outline-none placeholder:text-neutral-400"
             />
-          </label>
+            <div className="px-3 py-2 text-blue-700 text-sm">
+              BTC
+            </div>
+          </div>
+
 
           <div className="mt-4 grid grid-cols-2 gap-3">
             <button
