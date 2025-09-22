@@ -57,19 +57,25 @@ export default function Crypto24hChart() {
           x: {
             type: "time" as const,
             time: { unit: "hour" as const, tooltipFormat: "MMM d, HH:mm" },
+            ticks: {
+              display: false,
+            }
           },
-          y: { beginAtZero: false },
+          y: { 
+            beginAtZero: false,
+            position: "right"
+          },
         },
       },
     };
   }, [series]);
 
   if (status === "loading") return <p>Loading BTC/EUR…</p>;
-  if (status === "failed") return <p style={{ color: "crimson" }}>Error: {error}</p>;
+  if (status === "failed") return <p className="text-red-500">Error: {error}</p>;
   if (!chart) return <p>No data</p>;
 
   return (
-    <div style={{ height: 320 }}>
+    <div className="w-full">
       <Line data={chart.data} options={chart.options} />
     </div>
   );
