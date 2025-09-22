@@ -16,7 +16,7 @@ function formatEUR(value: number) {
 }
 
 function formatBTC(value: number) {
-  return `${value.toFixed(8)} BTC`;
+  return `${value.toFixed(5)} BTC`;
 }
 
 function formatTime(timestamp: string) {
@@ -45,12 +45,12 @@ export default function CryptoTransactions() {
           {items.map((tx) => {
             const date = new Date(tx.timestamp);
             return (
-              <div key={tx.id} className="grid grid-cols-3 text-sm">
-                <div className="py-2 pr-4 pl-4 capitalize">
+              <div key={tx.id} className="grid grid-cols-5 text-sm">
+                <div className="py-2 pl-4 capitalize">
                   {tx.action}
                 </div>
-                <div className="py-2 pr-4 font-mono">{formatBTC(tx.btc)} / {formatEUR(tx.eur)}</div>
-                <div className="py-2 pr-4 font-mono">{formatTime(tx.timestamp)}</div>
+                <div className="py-2 pr-2 col-span-3">{formatBTC(tx.btc)} / {formatEUR(tx.eur)}</div>
+                <div className="py-2 pr-4">{formatTime(tx.timestamp)}</div>
               </div>
             );
           })}
