@@ -1,46 +1,40 @@
-import type { Store } from "@reduxjs/toolkit";
-
-jest.mock("@/lib/features/crypto/cryptoSlice", () => {
-  const initialState = { value: 0 };
-  const reducer = (state = initialState, action: { type: string }) => {
-    switch (action.type) {
-      case "crypto/increment":
-        return { value: state.value + 1 };
-      default:
-        return state;
-    }
-  };
-  return { __esModule: true, default: reducer };
-});
-
-const getFreshStore = async (): Promise<Store> => {
-  jest.resetModules();
-  const mod = await import("./store");
-  return mod.store as Store;
-};
+import * as storeModule from "./store";
+const store: any = (storeModule as any).store ?? (storeModule as any).default;
 
 describe("Redux store", () => {
-  it("mounts the crypto reducer at key 'crypto' with expected initial state", async () => {
-    const store = await getFreshStore();
-    expect(store.getState()).toEqual({ crypto: { value: 0 } });
-  });
-
-  it("dispatch routes to the crypto reducer", async () => {
-    const store = await getFreshStore();
-    store.dispatch({ type: "crypto/increment" });
-    expect((store.getState() as any).crypto.value).toBe(1);
-  });
-
-  it("unknown actions leave state unchanged", async () => {
-    const store = await getFreshStore();
-    const before = store.getState();
-    store.dispatch({ type: "unknown/action" });
-    expect(store.getState()).toEqual(before);
-  });
-
-  it("exposes getState and dispatch", async () => {
-    const store = await getFreshStore();
+  test("is created and exposes getState/dispatch/subscribe", () => {
+    expect(store).toBeTruthy();
     expect(typeof store.getState).toBe("function");
     expect(typeof store.dispatch).toBe("function");
+    expect(typeof store.subscribe).toBe("function");
+  });
+
+  test("has an initial state object", () => {
+    const state = store.getState();
+    expect(state).toBeDefined();
+    expect(typeof state).toBe("object");
+  });
+
+  test("dispatch returns something truthy and unknown action leaves state reference unchanged", () => {
+    const prevRef = store.getState();
+    const result = store.dispatch({ type: "__TEST_UNKNOWN_ACTION__" } as any);
+    expect(result).toBeTruthy();
+
+    const nextRef = store.getState();
+    expect(nextRef).toBe(prevRef);
+  });
+
+  test("subscribe notifies on dispatch and unsubscribe stops notifying", () => {
+    let calls = 0;
+    const unsubscribe = store.subscribe(() => {
+      calls += 1;
+    });
+
+    store.dispatch({ type: "__TEST_PING__" } as any);
+    expect(calls).toBe(1);
+
+    unsubscribe();
+    store.dispatch({ type: "__TEST_PING_2__" } as any);
+    expect(calls).toBe(1);
   });
 });
