@@ -25,14 +25,34 @@ const deCurrency = new Intl.NumberFormat("de-DE", {
   maximumFractionDigits: 2,
 });
 
-function parseGermanNumber(input: string): number | null {
-  const sanitized = input
-    .replace(/\s/g, "")
-    .replace(/€/g, "")
-    .replace(/\./g, "")
-    .replace(",", ".");
-  if (sanitized === "") return null;
-  const n = Number(sanitized);
+function parseLocaleNumber(input: string): number | null {
+  if (!input) return null;
+
+  const raw = input.replace(/\s|[€]/g, "");
+  const hasComma = raw.includes(",");
+  const hasDot = raw.includes(".");
+
+  let normalized = raw;
+
+  if (hasComma && hasDot) {
+    const lastComma = raw.lastIndexOf(",");
+    const lastDot = raw.lastIndexOf(".");
+    const decimalIsComma = lastComma > lastDot;
+
+    if (decimalIsComma) {
+      normalized = raw.replace(/\./g, "").replace(",", ".");
+    } else {
+      normalized = raw.replace(/,/g, "");
+    }
+  } else if (hasComma) {
+    normalized = raw.replace(/\./g, "").replace(",", ".");
+  } else if (hasDot) {
+    normalized = raw.replace(/,/g, "");
+  } else {
+    normalized = raw;
+  }
+
+  const n = Number(normalized);
   return Number.isFinite(n) ? n : null;
 }
 
@@ -82,19 +102,19 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
   };
 
   const handleBlurFormatEur = () => {
-    const n = parseGermanNumber(eurRaw);
+    const n = parseLocaleNumber(eurRaw);
     if (n === null) return;
     setEurRaw(deCurrency.format(n));
   };
 
   const handleFocusUnformatEur = () => {
-    const n = parseGermanNumber(eurRaw);
+    const n = parseLocaleNumber(eurRaw);
     if (n === null) return;
     setEurRaw(deNumber.format(n));
   };
 
   const handleBlurFormatBtc = () => {
-    const n = parseGermanNumber(btcRaw);
+    const n = parseLocaleNumber(btcRaw);
     if (n === null) return;
     setBtcRaw(deNumber.format(n));
   };
@@ -105,19 +125,22 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
   }, []);
 
   const handleAction = (side: TradeSide) => {
-    const eur = parseGermanNumber(eurRaw) ?? 0;
-    const btc = parseGermanNumber(btcRaw) ?? 0;
+    const eur = parseLocaleNumber(eurRaw) ?? 0;
+    const btc = parseLocaleNumber(btcRaw) ?? 0;
 
     if (eur > 0 && btc > 0) {
       let decimalEur = Math.abs(eur);
+      let decimalBTC = Math.abs(btc);
       // convert positive number to be saved as negative on sell, so state/format of transactions matches mock api
       if (side === 'buy') {
         decimalEur = -Math.abs(eur)
+      } else {
+        decimalBTC = -Math.abs(btc)
       }
       recordTrade(dispatch, {
         action: side,
         eur: decimalEur,
-        btc: Math.abs(btc),
+        btc: decimalBTC,
         timestamp: new Date().toISOString(),
       });
     }
@@ -161,7 +184,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
               value={eurRaw}
               onChange={(e) => {
                 setEurRaw(e.target.value);
-                const n = parseGermanNumber(e.target.value);
+                const n = parseLocaleNumber(e.target.value);
                 if (n !== null) syncFromEur(n);
               }}
               onBlur={handleBlurFormatEur}
@@ -178,7 +201,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
               value={btcRaw}
               onChange={(e) => {
                 setBtcRaw(e.target.value);
-                const n = parseGermanNumber(e.target.value);
+                const n = parseLocaleNumber(e.target.value);
                 if (n !== null) syncFromBtc(n);
               }}
               onBlur={handleBlurFormatBtc}
