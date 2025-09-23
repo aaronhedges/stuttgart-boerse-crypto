@@ -12,10 +12,6 @@ export function recordTrade(
 ) {
   const { action, btc, eur, timestamp } = params;
 
-  if (!(btc > 0) || !(eur > 0)) {
-    throw new Error("btc and eur must be positive magnitudes.");
-  }
-
   dispatch(
     addTransaction({
       action,
