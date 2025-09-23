@@ -32,6 +32,7 @@ export default function Crypto24hChart() {
   const [chartKey, setChartKey] = useState(0);
   const [containerWidth, setContainerWidth] = useState<number | null>(null);
 
+  // first attempt to detect a resize, but wasn't working consistently
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -50,6 +51,7 @@ export default function Crypto24hChart() {
     };
   }, []);
 
+  // fall back attempt to catch a resize based on the size of window
   useEffect(() => {
     let last = window.innerWidth;
     let t: any;
@@ -76,6 +78,7 @@ export default function Crypto24hChart() {
     const labels = series.map(([iso]) => iso);
     const values = series.map(([, p]) => p);
 
+    // dynamically calculate background color of chart so it can update during resizing events
     const backgroundColor = (ctx: ScriptableContext<"line">) => {
       const { chart } = ctx;
       const area: ChartArea | undefined = chart.chartArea;
