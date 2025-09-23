@@ -9,12 +9,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        primary: {
-          DEFAULT: "#153243",
-          foreground: "#ffffff",
-        },
-      },
       fontFamily: {
         sans: ["var(--font-open-sans)", "Open Sans", "ui-sans-serif", "system-ui"],
       },

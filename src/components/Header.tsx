@@ -7,7 +7,7 @@ export default function Header() {
       <div className="flex-shrink-0">
         <Image
           src="/images/bison.png" 
-          alt="Logo"
+          alt="Bison Logo"
           width={56}
           height={52}
           className="object-contain"
