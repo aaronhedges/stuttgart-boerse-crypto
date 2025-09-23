@@ -31,17 +31,3 @@ Run jest unit tests:
 ```bash
 npm test
 ```
-
-Run linter:
-
-```bash
-npm lint
-```
-
-Run linter with autofix:
-```bash
-npm lint:fix
-```
-
-## Learn More
-
