@@ -40,7 +40,7 @@ export default function CryptoTransactions() {
 
   return (
     <div className="w-full overflow-x-auto">
-      <div className="min-w-[300px] w-full border-collapse bg-gray-100 rounded-lg py-2">
+      <div className="min-w-[300px] w-full border-collapse bg-gray-100 dark:bg-white rounded-lg py-2">
         <div>
           {items.map((tx) => {
             const date = new Date(tx.timestamp);

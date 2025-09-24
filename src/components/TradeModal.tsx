@@ -176,7 +176,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
         </div>
 
         <div className="mt-4 space-y-3">
-          <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 overflow-hidden">
+          <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 dark:bg-white overflow-hidden">
             <input
               ref={eurInputRef}
               inputMode="decimal"
@@ -189,12 +189,12 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
               }}
               onBlur={handleBlurFormatEur}
               onFocus={handleFocusUnformatEur}
-              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400"
+              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-700"
             />
-            <div className="px-3 py-2 text-blue-700 text-sm">EUR</div>
+            <div className="px-3 py-2 text-[#153243] text-sm">EUR</div>
           </div>
 
-          <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 overflow-hidden">
+          <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 dark:bg-white overflow-hidden">
             <input
               inputMode="decimal"
               placeholder={deNumber.format(0)}
@@ -205,9 +205,9 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
                 if (n !== null) syncFromBtc(n);
               }}
               onBlur={handleBlurFormatBtc}
-              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400"
+              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-700"
             />
-            <div className="px-3 py-2 text-blue-700 text-sm">BTC</div>
+            <div className="px-3 py-2 text-[#153243] text-sm">BTC</div>
           </div>
 
           <div className="mt-4 grid grid-cols-2 gap-3">
