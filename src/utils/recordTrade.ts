@@ -1,23 +1,25 @@
 import type { AppDispatch } from "@/lib/store/store";
-import { addTransaction, TransactionAction } from "@/lib/store/transactionsSlice";
+import { addTransaction } from "@/lib/store/transactionsSlice";
+import { applyTrade } from "@/lib/store/accountSlice";
 
-export function recordTrade(
-  dispatch: AppDispatch,
-  params: {
-    action: TransactionAction;
-    btc: number;
-    eur: number;
-    timestamp?: string;
-  }
-) {
-  const { action, btc, eur, timestamp } = params;
+type TradePayload = {
+  action: "buy" | "sell";
+  eur: number;
+  btc: number;
+  timestamp: string;
+};
 
-  dispatch(
-    addTransaction({
-      action,
-      btc,
-      eur,
-      timestamp
-    })
-  );
+export function recordTrade(dispatch: AppDispatch, payload: TradePayload) {
+  const { action, eur, btc, timestamp } = payload;
+
+  const normalized = {
+    action,
+    eur: action === "buy" ? -Math.abs(eur) : Math.abs(eur),
+    btc: action === "buy" ? Math.abs(btc) : -Math.abs(btc),
+    timestamp,
+  };
+
+  dispatch(addTransaction(normalized));
+
+  dispatch(applyTrade({ eur: normalized.eur, btc: normalized.btc }));
 }

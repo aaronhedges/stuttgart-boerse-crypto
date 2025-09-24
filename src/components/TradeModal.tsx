@@ -129,18 +129,10 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
     const btc = parseLocaleNumber(btcRaw) ?? 0;
 
     if (eur > 0 && btc > 0) {
-      let decimalEur = Math.abs(eur);
-      let decimalBTC = Math.abs(btc);
-      // convert positive number to be saved as negative on sell, so state/format of transactions matches mock api
-      if (side === 'buy') {
-        decimalEur = -Math.abs(eur)
-      } else {
-        decimalBTC = -Math.abs(btc)
-      }
       recordTrade(dispatch, {
         action: side,
-        eur: decimalEur,
-        btc: decimalBTC,
+        eur: Math.abs(eur),
+        btc: Math.abs(btc),
         timestamp: new Date().toISOString(),
       });
     }

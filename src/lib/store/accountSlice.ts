@@ -22,20 +22,23 @@ export const fetchUserAccount = createAsyncThunk(
     return {
       availableBtc: data?.balances?.availableBtc ?? 0,
       availableEur: data?.balances?.availableEur ?? 0,
-    } as Pick<AccountState, "availableBtc" | "availableEur">;
+    };
   }
 );
+
+type ApplyTradePayload = {
+  eur: number;
+  btc: number;
+};
 
 const accountSlice = createSlice({
   name: "account",
   initialState,
   reducers: {
-    setAccount(
-      state,
-      action: PayloadAction<Pick<AccountState, "availableBtc" | "availableEur">>
-    ) {
-      state.availableBtc = action.payload.availableBtc;
-      state.availableEur = action.payload.availableEur;
+    applyTrade(state, action: PayloadAction<ApplyTradePayload>) {
+      const { eur, btc } = action.payload;
+      state.availableEur = (state.availableEur ?? 0) + eur;
+      state.availableBtc = (state.availableBtc ?? 0) + btc;
     },
   },
   extraReducers: (builder) => {
@@ -56,5 +59,5 @@ const accountSlice = createSlice({
   },
 });
 
-export const { setAccount } = accountSlice.actions;
+export const { applyTrade } = accountSlice.actions;
 export default accountSlice.reducer;

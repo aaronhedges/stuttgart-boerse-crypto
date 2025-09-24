@@ -1,8 +1,6 @@
 {
-  "userId": "demo-user",
   "balances": {
     "availableBtc": 0.12345678,
     "availableEur": 242.51
-  },
-  "updatedAt": "2025-09-24T11:00:00Z"
+  }
 }

@@ -1,99 +1,44 @@
 import { createSlice, PayloadAction, nanoid } from "@reduxjs/toolkit";
 
-export type TransactionAction = "buy" | "sell";
+export type TxAction = "buy" | "sell";
 
-export interface CryptoTransaction {
-  id: string; 
-  action: TransactionAction;
-  btc: number; 
+export interface Transaction {
+  id: string;
+  action: TxAction;
   eur: number; 
+  btc: number; 
   timestamp: string; 
 }
 
-interface TransactionsState {
-  items: CryptoTransaction[];
+type State = {
+  items: Transaction[];
   isInitialized: boolean;
-}
+};
 
-const initialState: TransactionsState = {
+const initialState: State = {
   items: [],
-  isInitialized: false
+  isInitialized: false,
 };
 
 const transactionsSlice = createSlice({
   name: "transactions",
   initialState,
   reducers: {
-    setTransactions(state, action: PayloadAction<CryptoTransaction[]>) {
+    setTransactions(state, action: PayloadAction<Transaction[]>) {
       state.items = [...action.payload].sort(
-        (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+        (a, b) => Date.parse(b.timestamp) - Date.parse(a.timestamp)
       );
       state.isInitialized = true;
     },
-    addTransaction: {
-      prepare(partial: Omit<CryptoTransaction, "id"> & { id?: string }) {
-        return {
-          payload: {
-            id: partial.id ?? nanoid(),
-            ...partial
-          } as CryptoTransaction
-        };
-      },
-      reducer(state, action: PayloadAction<CryptoTransaction>) {
-        const tx = action.payload;
-        const t = new Date(tx.timestamp).getTime();
-        const idx = state.items.findIndex(
-          (x) => new Date(x.timestamp).getTime() < t
-        );
-        if (idx === -1) state.items.push(tx);
-        else state.items.splice(idx, 0, tx);
-      }
+    addTransaction(
+      state,
+      action: PayloadAction<Omit<Transaction, "id"> & { id?: string }>
+    ) {
+      const id = action.payload.id ?? nanoid();
+      state.items.unshift({ ...action.payload, id });
     },
-    insertTransaction: {
-      prepare(input: {
-        action: TransactionAction;
-        btc: number;
-        eur: number;
-        timestamp?: string;
-        id?: string;
-      }) {
-        console.log('insert transaction trig')
-        const { action } = input;
-
-        const absBtc = Math.abs(input.btc);
-        const absEur = Math.abs(input.eur);
-
-        const btc = action === "buy" ? +absBtc : -absBtc;
-        const eur = action === "buy" ? -absEur : +absEur;
-
-        return {
-          payload: {
-            id: input.id ?? nanoid(),
-            action,
-            btc,
-            eur,
-            timestamp: input.timestamp ?? new Date().toISOString()
-          } as CryptoTransaction
-        };
-      },
-      reducer(state, action: PayloadAction<CryptoTransaction>) {
-        const tx = action.payload;
-        const t = new Date(tx.timestamp).getTime();
-        const idx = state.items.findIndex(
-          (x) => new Date(x.timestamp).getTime() < t
-        );
-        if (idx === -1) state.items.push(tx);
-        else state.items.splice(idx, 0, tx);
-      }
-    },
-    clearTransactions(state) {
-      state.items = [];
-      state.isInitialized = false;
-    }
-  }
+  },
 });
 
-export const { setTransactions, addTransaction, insertTransaction, clearTransactions } =
-  transactionsSlice.actions;
-
+export const { setTransactions, addTransaction } = transactionsSlice.actions;
 export default transactionsSlice.reducer;
