@@ -129,7 +129,7 @@ export default function Crypto24hChart() {
         },
       },
     };
-  }, [series]);
+  }, [series, containerWidth]);
 
   if (status === "loading") return <p>Loading BTC/EUR…</p>;
   if (status === "failed") return <p className="text-red-500">Error: {error}</p>;
