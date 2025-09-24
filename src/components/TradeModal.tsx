@@ -3,6 +3,7 @@ import { X } from "lucide-react";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/lib/store/store";
 import { recordTrade } from "@/utils/recordTrade";
+import { parseLocaleNumber, formatEurDecimal, formatNumber } from "@/utils/formatter";
 
 export type TradeSide = "buy" | "sell";
 
@@ -11,49 +12,6 @@ export interface TradeModalProps {
   onClose: () => void;
   exchangeRateEurPerBtc?: number;
   onSubmit?: (payload: { side: TradeSide; eur: number; btc: number }) => void;
-}
-
-const deNumber = new Intl.NumberFormat("de-DE", {
-  minimumFractionDigits: 0,
-  maximumFractionDigits: 8,
-});
-
-const deCurrency = new Intl.NumberFormat("de-DE", {
-  style: "decimal",
-  currency: "EUR",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
-
-function parseLocaleNumber(input: string): number | null {
-  if (!input) return null;
-
-  const raw = input.replace(/\s|[€]/g, "");
-  const hasComma = raw.includes(",");
-  const hasDot = raw.includes(".");
-
-  let normalized = raw;
-
-  if (hasComma && hasDot) {
-    const lastComma = raw.lastIndexOf(",");
-    const lastDot = raw.lastIndexOf(".");
-    const decimalIsComma = lastComma > lastDot;
-
-    if (decimalIsComma) {
-      normalized = raw.replace(/\./g, "").replace(",", ".");
-    } else {
-      normalized = raw.replace(/,/g, "");
-    }
-  } else if (hasComma) {
-    normalized = raw.replace(/\./g, "").replace(",", ".");
-  } else if (hasDot) {
-    normalized = raw.replace(/,/g, "");
-  } else {
-    normalized = raw;
-  }
-
-  const n = Number(normalized);
-  return Number.isFinite(n) ? n : null;
 }
 
 export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }: TradeModalProps) {
@@ -104,19 +62,19 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
   const handleBlurFormatEur = () => {
     const n = parseLocaleNumber(eurRaw);
     if (n === null) return;
-    setEurRaw(deCurrency.format(n));
+    setEurRaw(formatEurDecimal(n));
   };
 
   const handleFocusUnformatEur = () => {
     const n = parseLocaleNumber(eurRaw);
     if (n === null) return;
-    setEurRaw(deNumber.format(n));
+    setEurRaw(formatNumber(n, { maxFraction: 8 }));
   };
 
   const handleBlurFormatBtc = () => {
     const n = parseLocaleNumber(btcRaw);
     if (n === null) return;
-    setBtcRaw(deNumber.format(n));
+    setBtcRaw(formatNumber(n, { maxFraction: 8 }));
   };
 
   const clearForm = useCallback(() => {
@@ -172,7 +130,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
             <input
               ref={eurInputRef}
               inputMode="decimal"
-              placeholder={deCurrency.format(0)}
+              placeholder={formatEurDecimal(0)}
               value={eurRaw}
               onChange={(e) => {
                 setEurRaw(e.target.value);
@@ -189,7 +147,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }:
           <div className="w-full flex items-center rounded-lg w-80 bg-gray-100 dark:bg-white overflow-hidden">
             <input
               inputMode="decimal"
-              placeholder={deNumber.format(0)}
+              placeholder={formatNumber(0, { maxFraction: 8 })}
               value={btcRaw}
               onChange={(e) => {
                 setBtcRaw(e.target.value);

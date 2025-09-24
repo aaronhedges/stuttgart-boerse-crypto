@@ -4,22 +4,7 @@ import Image from "next/image";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { fetchUserAccount } from "@/lib/store/accountSlice";
-
-// @TODO refactor to external util
-function formatBtc(v: number | null) {
-  if (v == null) return "— BTC";
-  return `${v.toFixed(8).replace(/\.?0+$/, "")} BTC`;
-}
-
-function formatEur(v: number | null) {
-  if (v == null) return "—";
-  return new Intl.NumberFormat("de-DE", {
-    style: "currency",
-    currency: "EUR",
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2,
-  }).format(v);
-}
+import { formatBtc, formatEurCurrency } from "@/utils/formatter";
 
 export default function Header() {
   const dispatch = useAppDispatch();
@@ -31,8 +16,8 @@ export default function Header() {
     if (status === "idle") dispatch(fetchUserAccount());
   }, [dispatch, status]);
 
-  const btc = formatBtc(availableBtc);
-  const eur = formatEur(availableEur);
+  const btc = availableBtc == null ? "— BTC" : formatBtc(availableBtc);
+  const eur = availableEur == null ? "—" : formatEurCurrency(availableEur);
 
   return (
     <header className="w-full max-w-screen-md flex items-center justify-between">
