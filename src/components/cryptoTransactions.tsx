@@ -45,7 +45,7 @@ export default function CryptoTransactions() {
           {items.map((tx) => {
             const date = new Date(tx.timestamp);
             return (
-              <div key={tx.id} className="grid grid-cols-5 text-sm">
+              <div key={tx.id} className="grid grid-cols-5 text-sm dark:text-neutral-700">
                 <div className="py-2 pl-4 capitalize">
                   {tx.action}
                 </div>
