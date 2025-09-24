@@ -28,7 +28,7 @@ export default function Home() {
     <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-5 pb-5 gap-5 sm:p-20">
       <Header />
       <main className="w-full max-w-screen-md">
-        <div className="flex gap-1 items-center flex-row sm:flex-row">
+        <div className="flex gap-1 items-center flex-column">
           <h1 className="font-semibold text-2xl">BTC</h1>
           <h2 className="font-semibold text-2xl">{formatEUR(latestPrice)}</h2>
           <h3 className="text-sm">PnL: <span className="font-color-green">+12,3 €</span></h3>
