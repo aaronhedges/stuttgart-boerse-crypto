@@ -16,7 +16,6 @@ function formatEUR(n: number | null) {
 export default function Home() {
   const dispatch = useAppDispatch();
   const { latestPrice, status } = useAppSelector((s) => s.crypto);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     if (status === "idle") {
@@ -44,7 +43,6 @@ export default function Home() {
           <CryptoTransactions />
         </section>
       </main>
-      {/* <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center"></footer> */}
     </div>
   );
 }
