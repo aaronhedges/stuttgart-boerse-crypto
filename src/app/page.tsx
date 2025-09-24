@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
 import Header from "@/components/Header";

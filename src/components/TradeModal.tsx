@@ -11,10 +11,9 @@ export interface TradeModalProps {
   isOpen: boolean;
   onClose: () => void;
   exchangeRateEurPerBtc?: number;
-  onSubmit?: (payload: { side: TradeSide; eur: number; btc: number }) => void;
 }
 
-export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc, onSubmit }: TradeModalProps) {
+export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc }: TradeModalProps) {
   const dispatch = useDispatch<AppDispatch>();
   const dialogRef = useRef<HTMLDivElement>(null);
   const eurInputRef = useRef<HTMLInputElement>(null);

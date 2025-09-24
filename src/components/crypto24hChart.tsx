@@ -37,7 +37,7 @@ export default function Crypto24hChart() {
     const el = containerRef.current;
     if (!el) return;
 
-    let debounce: any;
+    let debounce: ReturnType<typeof setTimeout>;
     const ro = new ResizeObserver(([entry]) => {
       setContainerWidth(entry.contentRect.width);
       clearTimeout(debounce);
@@ -54,7 +54,7 @@ export default function Crypto24hChart() {
   // fall back attempt to catch a resize based on the size of window
   useEffect(() => {
     let last = window.innerWidth;
-    let t: any;
+    let t: ReturnType<typeof setTimeout>;
     const onResize = () => {
       if (window.innerWidth === last) return;
       last = window.innerWidth;
@@ -129,7 +129,7 @@ export default function Crypto24hChart() {
         },
       },
     };
-  }, [series, containerWidth]);
+  }, [series]);
 
   if (status === "loading") return <p>Loading BTC/EUR…</p>;
   if (status === "failed") return <p className="text-red-500">Error: {error}</p>;
