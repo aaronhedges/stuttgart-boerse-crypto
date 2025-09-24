@@ -73,17 +73,17 @@ describe("TradeModal", () => {
   test("closes when clicking backdrop", async () => {
     const { onClose, user } = await setup();
     const dialog = screen.getByRole("dialog");
-    await user.click(dialog); // user-event wraps act()
+    await user.click(dialog);
     expect(onClose).toHaveBeenCalledTimes(1);
   });
-  
+
   test("does not close when clicking inside the dialog content", async () => {
     const { onClose, user } = await setup();
-  
+
     const dialog = screen.getByRole("dialog");
     const content = dialog.querySelector("div.w-full.max-w-md") as HTMLElement;
     expect(content).toBeTruthy();
-  
+
     await user.click(content);
     expect(onClose).not.toHaveBeenCalled();
   });
@@ -113,7 +113,7 @@ describe("TradeModal", () => {
     await user.clear(eurInput);
     await user.type(eurInput, "1234.5");
 
-    await user.tab(); // blurs EUR
+    await user.tab();
     expect(eurInput).toHaveValue("1.234,50");
 
     await user.click(eurInput);
@@ -126,11 +126,11 @@ describe("TradeModal", () => {
 
     await user.clear(btcInput);
     await user.type(btcInput, "1.2345");
-    await user.tab(); // blur
+    await user.tab();
     expect(btcInput).toHaveValue("1,2345");
   });
 
-  test("clicking Buy calls recordTrade with -EUR and +BTC, clears form, closes", async () => {
+  test("clicking Buy calls recordTrade, clears form, closes", async () => {
     const { onClose, user } = await setup();
     const [eurInput, btcInput] = screen.getAllByRole("textbox");
     const buyBtn = screen.getByRole("button", { name: /buy/i });
@@ -148,7 +148,7 @@ describe("TradeModal", () => {
     const [passedDispatch, payload] = recordTradeMock.mock.calls[0];
     expect(passedDispatch).toBe(dispatchMock);
     expect(payload.action).toBe("buy");
-    expect(payload.eur).toBe(-1000);
+    expect(payload.eur).toBe(1000);
     expect(payload.btc).toBe(0.05);
 
     expect(typeof payload.timestamp).toBe("string");
@@ -161,7 +161,7 @@ describe("TradeModal", () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  test("clicking Sell calls recordTrade with +EUR and -BTC, clears form, closes", async () => {
+  test("clicking Sell calls recordTrade, clears form, closes", async () => {
     const { onClose, user } = await setup();
     const [eurInput, btcInput] = screen.getAllByRole("textbox");
     const sellBtn = screen.getByRole("button", { name: /sell/i });
@@ -178,7 +178,7 @@ describe("TradeModal", () => {
     expect(passedDispatch).toBe(dispatchMock);
     expect(payload.action).toBe("sell");
     expect(payload.eur).toBe(1000);
-    expect(payload.btc).toBe(-0.05);
+    expect(payload.btc).toBe(0.05);
 
     expect(onClose).toHaveBeenCalled();
   });
