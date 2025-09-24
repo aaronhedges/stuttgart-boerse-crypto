@@ -1,7 +1,7 @@
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
-import nextPlugin from '@next/eslint-plugin-next';
 import reactHooks from 'eslint-plugin-react-hooks';
+import next from '@next/eslint-plugin-next';
 import prettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 
@@ -15,38 +15,42 @@ export default [
       '**/*.config.*',
       '**/*rc.*',
       'next-env.d.ts',
+      'test/__mocks__/**',
     ],
   },
   {
-    files: ['**/*.{js,mjs,cjs}'],
+    files: ['**/*.{js,mjs,cjs,jsx}'],
     ...js.configs.recommended,
     languageOptions: {
-      globals: { ...globals.node, ...globals.es2021 },
+      ecmaVersion: 2022,
+      sourceType: 'module',
+      globals: { ...globals.browser, ...globals.node, ...globals.es2021 },
     },
     rules: {
     },
   },
-  ...tseslint.configs.recommendedTypeChecked,
+  ...tseslint.configs.recommended,
   {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       parser: tseslint.parser,
       parserOptions: {
         project: ['./tsconfig.json'],
-        tsconfigRootDir: import.meta.dirname,
+        tsconfigRootDir: new URL('.', import.meta.url).pathname,
       },
       globals: { ...globals.browser, ...globals.node },
     },
     plugins: {
-      '@next/next': nextPlugin,
       'react-hooks': reactHooks,
+      '@next/next': next,
       prettier,
     },
     rules: {
-      ...nextPlugin.configs['core-web-vitals'].rules,
+      ...(tseslint.configs.recommendedTypeChecked?.[0]?.rules ?? {}),
       'react-hooks/rules-of-hooks': 'error',
       'react-hooks/exhaustive-deps': 'warn',
       'prettier/prettier': 'error',
+      '@typescript-eslint/await-thenable': 'error',
     },
   },
   {
