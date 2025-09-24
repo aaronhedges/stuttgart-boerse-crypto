@@ -5,9 +5,9 @@ export type TxAction = "buy" | "sell";
 export interface Transaction {
   id: string;
   action: TxAction;
-  eur: number; 
-  btc: number; 
-  timestamp: string; 
+  eur: number;
+  btc: number;
+  timestamp: string;
 }
 
 type State = {
@@ -30,10 +30,7 @@ const transactionsSlice = createSlice({
       );
       state.isInitialized = true;
     },
-    addTransaction(
-      state,
-      action: PayloadAction<Omit<Transaction, "id"> & { id?: string }>
-    ) {
+    addTransaction(state, action: PayloadAction<Omit<Transaction, "id"> & { id?: string }>) {
       const id = action.payload.id ?? nanoid();
       state.items.unshift({ ...action.payload, id });
     },

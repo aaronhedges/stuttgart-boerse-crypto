@@ -30,19 +30,17 @@ export default function CryptoTransactions() {
             // const date = new Date(tx.timestamp);
             return (
               <div key={tx.id} className="grid grid-cols-5 text-sm dark:text-neutral-700">
-                <div className="py-2 pl-4 capitalize">
-                  {tx.action}
+                <div className="py-2 pl-4 capitalize">{tx.action}</div>
+                <div className="py-2 pr-2 col-span-3">
+                  {formatBtc(tx.btc, { decimals: 5 })} / {formatEurCurrency(tx.eur)}
                 </div>
-                <div className="py-2 pr-2 col-span-3">{formatBtc(tx.btc, { decimals: 5 })} / {formatEurCurrency(tx.eur)}</div>
                 <div className="py-2 pr-4">{formatTimeHMS(tx.timestamp)}</div>
               </div>
             );
           })}
           {items.length === 0 && (
             <div>
-              <div className="py-6 text-center text-sm text-gray-500">
-                No transactions yet.
-              </div>
+              <div className="py-6 text-center text-sm text-gray-500">No transactions yet.</div>
             </div>
           )}
         </div>

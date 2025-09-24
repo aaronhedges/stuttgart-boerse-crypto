@@ -13,18 +13,15 @@ const initialState: AccountState = {
   status: "idle",
 };
 
-export const fetchUserAccount = createAsyncThunk(
-  "account/fetchUserAccount",
-  async () => {
-    const res = await fetch("/mock/userAccount.json", { cache: "no-store" });
-    if (!res.ok) throw new Error(`Failed to load userAccount.json (${res.status})`);
-    const data = await res.json();
-    return {
-      availableBtc: data?.balances?.availableBtc ?? 0,
-      availableEur: data?.balances?.availableEur ?? 0,
-    };
-  }
-);
+export const fetchUserAccount = createAsyncThunk("account/fetchUserAccount", async () => {
+  const res = await fetch("/mock/userAccount.json", { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load userAccount.json (${res.status})`);
+  const data = await res.json();
+  return {
+    availableBtc: data?.balances?.availableBtc ?? 0,
+    availableEur: data?.balances?.availableEur ?? 0,
+  };
+});
 
 type ApplyTradePayload = {
   eur: number;

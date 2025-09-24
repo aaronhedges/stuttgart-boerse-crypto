@@ -30,12 +30,14 @@ export default function Home() {
         <div className="flex gap-1 items-center flex-column">
           <h1 className="font-semibold text-2xl">BTC</h1>
           <h2 className="font-semibold text-2xl">{formatEUR(latestPrice)}</h2>
-          <h3 className="text-sm">PnL: <span className="font-color-green">+12,3 €</span></h3>
+          <h3 className="text-sm">
+            PnL: <span className="font-color-green">+12,3 €</span>
+          </h3>
         </div>
         <section>
           <Crypto24hChart />
           <TradeWidget
-            exchangeRateEurPerBtc={latestPrice} 
+            exchangeRateEurPerBtc={latestPrice}
             onSubmit={({ side, eur, btc }) => {
               console.log("trade", { side, eur, btc });
             }}

@@ -8,9 +8,7 @@ import { formatBtc, formatEurCurrency } from "@/utils/formatter";
 
 export default function Header() {
   const dispatch = useAppDispatch();
-  const { availableBtc, availableEur, status, error } = useAppSelector(
-    (s) => s.account
-  );
+  const { availableBtc, availableEur, status, error } = useAppSelector((s) => s.account);
 
   useEffect(() => {
     if (status === "idle") dispatch(fetchUserAccount());
@@ -23,7 +21,7 @@ export default function Header() {
     <header className="w-full max-w-screen-md flex items-center justify-between">
       <div className="flex-shrink-0">
         <Image
-          src="/images/bison.png" 
+          src="/images/bison.png"
           alt="Bison Logo"
           width={56}
           height={52}

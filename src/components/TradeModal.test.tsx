@@ -28,18 +28,9 @@ describe("TradeModal", () => {
     jest.useRealTimers();
   });
 
-  const setup = async (
-    props?: Partial<React.ComponentProps<typeof TradeModal>>
-  ) => {
+  const setup = async (props?: Partial<React.ComponentProps<typeof TradeModal>>) => {
     const onClose = jest.fn();
-    render(
-      <TradeModal
-        isOpen={true}
-        onClose={onClose}
-        exchangeRateEurPerBtc={20000}
-        {...props}
-      />
-    );
+    render(<TradeModal isOpen={true} onClose={onClose} exchangeRateEurPerBtc={20000} {...props} />);
     await act(async () => {
       jest.runAllTimers();
     });

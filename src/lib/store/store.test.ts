@@ -1,8 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import accountReducer, {
-  applyTrade,
-  fetchUserAccount,
-} from "@/lib/store/accountSlice";
+import accountReducer, { applyTrade, fetchUserAccount } from "@/lib/store/accountSlice";
 import transactionsReducer, {
   addTransaction,
   setTransactions,
@@ -59,12 +56,10 @@ describe("store integration", () => {
       },
       updatedAt: "2025-09-24T11:00:00Z",
     };
-    const fetchSpy = jest
-      .spyOn(global, "fetch" as any)
-      .mockResolvedValue({
-        ok: true,
-        json: async () => mockJson,
-      } as any);
+    const fetchSpy = jest.spyOn(global, "fetch" as any).mockResolvedValue({
+      ok: true,
+      json: async () => mockJson,
+    } as any);
 
     const run = store.dispatch(fetchUserAccount());
     expect(store.getState().account.status).toBe("loading");

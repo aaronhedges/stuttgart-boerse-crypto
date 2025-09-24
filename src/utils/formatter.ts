@@ -23,7 +23,11 @@ export function parseLocaleNumber(input: string, locale: string = "de-DE"): numb
 
 export function formatNumber(
   value: number,
-  { locale = "de-DE", minFraction = 0, maxFraction = 8 }: { locale?: string; minFraction?: number; maxFraction?: number } = {}
+  {
+    locale = "de-DE",
+    minFraction = 0,
+    maxFraction = 8,
+  }: { locale?: string; minFraction?: number; maxFraction?: number } = {}
 ): string {
   return new Intl.NumberFormat(locale, {
     minimumFractionDigits: minFraction,
@@ -54,7 +58,10 @@ export function formatEurDecimal(
   }).format(value);
 }
 
-export function formatBtc(value: number, { decimals = 8, trim = true }: { decimals?: number; trim?: boolean } = {}): string {
+export function formatBtc(
+  value: number,
+  { decimals = 8, trim = true }: { decimals?: number; trim?: boolean } = {}
+): string {
   const s = value.toFixed(decimals);
   const trimmed = trim ? s.replace(/\.?0+$/, "") : s;
   return `${trimmed} BTC`;
