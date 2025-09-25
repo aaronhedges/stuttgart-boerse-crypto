@@ -138,7 +138,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc }: TradeModa
               }}
               onBlur={handleBlurFormatEur}
               onFocus={handleFocusUnformatEur}
-              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-700"
+              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-700 dark:text-neutral-700"
             />
             <div className="px-3 py-2 text-[#153243] text-sm">EUR</div>
           </div>
@@ -154,7 +154,7 @@ export function TradeModal({ isOpen, onClose, exchangeRateEurPerBtc }: TradeModa
                 if (n !== null) syncFromBtc(n);
               }}
               onBlur={handleBlurFormatBtc}
-              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-700"
+              className="flex-1 p-2 text-right outline-none placeholder:text-neutral-400 dark:placeholder:text-neutral-700 dark:text-neutral-700"
             />
             <div className="px-3 py-2 text-[#153243] text-sm">BTC</div>
           </div>
