@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks/hooks";
 import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
 import Header from "@/components/Header";
-import Crypto24hChart from "@/components/Crypto24hChart";
+import Crypto24hChart from "@/components/crypto24hChart";
 import TradeWidget from "@/components/TradeModal";
 import CryptoTransactions from "@/components/CryptoTransactions";
 
