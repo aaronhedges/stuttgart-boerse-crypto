@@ -6,7 +6,7 @@ import { fetchCrypto24h } from "@/lib/store/cryptoSlice";
 import Header from "@/components/Header";
 import Crypto24hChart from "@/components/crypto24hChart";
 import TradeWidget from "@/components/TradeModal";
-import CryptoTransactions from "@/components/CryptoTransactions";
+import CryptoTransactions from "@/components/cryptoTransactions";
 
 function formatEUR(n: number | null) {
   if (n == null) return "—";
